@@ -1,0 +1,34 @@
+#lienzo{
+  background:url(./background.jpg);
+  margin: 80px 10px;
+  position: absolute;
+  z-index: 100;
+  display: block;
+}
+
+#contenedor{
+  margin: 5vh auto;
+  width: 1000px;
+  height: 500px;
+}
+
+#fondo{
+  background: url(./images.jpg);
+
+}
+
+
+#fondoDeJuego{
+  
+  align-content: center;
+  justify-content: center;
+}
+
+.theBatman{
+  display: block;
+  left: 20px;
+  top: 480px;
+  position: relative;
+  z-index: 200;
+}
+
