@@ -12,9 +12,18 @@ document.addEventListener('keydown', function(pulsar){
     }
     });
      
-    var batman;
-    var bloque;
+    var imgBruja,  ImgBat;
+    
+    function cargarImagenes() {
+        imgBruja = new Image();
+        ImgBat = new Image();
         
+        imgBruja.src = "imagenes/batman.jpg";
+        ImgBat.src = "img/bat.png";
+        
+    }
+    
+    
     var ancho = 1200;
     var alto = 500;
     
@@ -23,6 +32,7 @@ document.addEventListener('keydown', function(pulsar){
     function inicializar(){
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
+    cargarImagenes();
     }
     
     function borrarCanvas(){
@@ -36,41 +46,52 @@ document.addEventListener('keydown', function(pulsar){
     var bat = {x:ancho + 100, y: suelo-0};
     
     
-    function logicaBloque(){
-       if(bloque.x < -100){
-           bloque.x = ancho +100;
+    
+    
+    function dibujarBruja() {
+    //0,0 (posicion de clipping) 64,64 (tamaño) 100,100 (x,y) 50,50 (tamaño reescalar)
+    ctx.drawImage(imgBruja,0,0,84,84,100,bruja.y,65,65);
+    }
+    
+    function dibujarBat () {
+    ctx.drawImage(ImgBat,0,0,75,48,bat.x,bat.y,65,45);
+    }
+    
+    function logicaBat(){
+       if(bat.x < -100){
+           bat.x = ancho +100;
          puntuacion++;
        }
        else{
-           bloque.x -= nivel.velocidad;
+           bat.x -= nivel.velocidad;
        }
     }
     
     
     function saltar(){
-        batman.saltando = true;
-        batman.vy = batman.salto;
+        bruja.saltando = true;
+        bruja.vy = bruja.salto;
     }
     
     function gravedad(){
-        if(batman.saltando == true) {
+        if(bruja.saltando == true) {
     
-            if(batman.y - batman.vy - batman.gravedad > suelo){
-                batman.saltando= false;
-                batman.vy = 0;
-                batman.y = suelo;
+            if(bruja.y - bruja.vy - bruja.gravedad > suelo){
+                bruja.saltando= false;
+                bruja.vy = 0;
+                bruja.y = suelo;
             }
             else{
-            batman.vy -= batman.gravedad;
-            batman.y -= batman.vy;
+            bruja.vy -= bruja.gravedad;
+            bruja.y -= bruja.vy;
             }
         }
     }
     
     function colision(){
        
-    if(bloque.x >= 100 && bloque.x <= 165){
-      if(batman.y >= suelo) {
+    if(bat.x >= 100 && bat.x <= 165){
+      if(bruja.y >= suelo) {
           nivel.muerto = true;
           nivel.velocidad = 0;
           
@@ -105,12 +126,8 @@ document.addEventListener('keydown', function(pulsar){
         borrarCanvas();
         gravedad();
         colision();
-        logicaBloque();
+        logicaBat();
+        dibujarBat();
+        dibujarBruja();
         puntaje();
     }
-
-setTimeout(function() {
-	var h1= document.createElement('H1')
-    h1.innerHTML = "GAME OVER"
-	window.location.href = "./pantallaPrincipal.html"
-},60000)
